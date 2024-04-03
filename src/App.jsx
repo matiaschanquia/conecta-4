@@ -93,6 +93,14 @@ const App = () => {
 		setTableroConFichas([ ...newTablero(amountTablero) ]);
 	};
 
+	const handleClickReset = () => {
+		localStorage.removeItem("puntuaciones");
+		setPuntuaciones({
+			rojo: 0,
+			amarillo: 0
+		});
+	};
+
 	useEffect(() => {
 		const lsPuntuaciones = localStorage.getItem("puntuaciones");
 		
@@ -124,10 +132,14 @@ const App = () => {
 					<span className="number">{puntuaciones.amarillo}</span>
 				</div>
 			</div>
-			<p className="mensaje">
-				Turno del <span className={turno === 0 ? "rojo" : "amarillo"}>{turno === 0 ? "rojo" : "amarillo"}</span>. 
-				Toca una columna
-			</p>
+			{
+				tableroDesactivado ? 
+					<p className="mensaje">Limpie el tablero para jugar de nuevo</p> :
+					<p className="mensaje">
+						Turno del <span className={turno === 0 ? "rojo" : "amarillo"}>{turno === 0 ? "rojo" : "amarillo"}</span>. 
+						Toca una columna
+					</p>
+			}
 			<table border={1} className="tablero">
 				<tbody>
 					{
@@ -155,7 +167,7 @@ const App = () => {
 			</table>
 			<div className="buttons">
 				<button onClick={handleClickLimpiar}>Limpiar tablero</button>
-				<button>Resetear puntuaciones</button>
+				<button onClick={handleClickReset}>Resetear puntuaciones</button>
 			</div>
 
 			<footer className="footer">
